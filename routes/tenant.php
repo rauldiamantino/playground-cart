@@ -24,19 +24,10 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
+
+    // AGORA: só funciona se o domínio for do tenant
     Route::get('/', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
+        return 'Bem-vindo ao tenant: ' . tenant('id');
     });
 
-    Route::get('/hello', function () {
-        return 'Hello, welcome to your store!';
-    });
-
-    Route::get('/db-debug', function () {
-        return [
-            'connection_name' => DB::getDefaultConnection(),
-            'database_name' => DB::connection()->getDatabaseName(),
-            'tenant_id' => tenant('id'),
-        ];
-    });
 });
