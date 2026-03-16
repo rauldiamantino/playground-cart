@@ -32,5 +32,8 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="TENANCY_DATABASE_DRIVER" value="sqlite"/>
+        <env name="DB_TENANT_DRIVER" value="sqlite"/>
+        <env name="TENANCY_TESTING" value="true"/>
     </php>
 </phpunit>
