@@ -1,9 +1,7 @@
 <?php
 
-declare(strict_types=1);
-
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Domain\ProductController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -25,9 +23,10 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
 
-    // AGORA: só funciona se o domínio for do tenant
     Route::get('/', function () {
-        return 'Bem-vindo ao tenant: ' . tenant('id');
+        return 'Welcome to tenant: ' . tenant('id');
     });
 
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/products', [ProductController::class, 'store']);
 });
