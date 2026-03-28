@@ -14,7 +14,7 @@ class TenantRegistrationController extends Controller
 
     public function create()
     {
-        return view('tenants.create');
+        return view('platform.tenants.create');
     }
 
     public function store(Request $request)
