@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Domain\ProductController;
+use App\Http\Controllers\Domain\Admin\ProductController as AdminProduct;
+use App\Http\Controllers\Domain\Shop\ProductController as ShopProduct;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -27,11 +28,17 @@ Route::middleware([
         return 'Welcome to tenant: ' . tenant('id');
     });
 
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
-    Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
-    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::name('shop.')->group(function () {
+        Route::get('/', [ShopProduct::class, 'index'])->name('products.index');
+        Route::get('products/{id}', [ShopProduct::class, 'show'])->name('products.show');
+    });
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+
+        Route::get('/', function () {
+            return 'Tenant ' . tenant('id') . ' dashboard';
+        });
+
+        Route::resource('products', AdminProduct::class)->except(['show']);
+    });
 });
