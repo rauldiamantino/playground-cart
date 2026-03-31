@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Enums\CategoryStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +16,10 @@ class ProductVariant extends Model
         'price',
         'option_1_id',
         'option_2_id',
+    ];
+
+    protected $casts = [
+        'status' => CategoryStatus::class,
     ];
 
     public function products(): BelongsTo
